@@ -2,6 +2,7 @@
 ---
 ## 下載Library新增至Arduino IDE
 #### 至Github下載ntlib Library並添加至Arduino中，步驟如下
+:::info
 #### [Github連結](https://github.com/JiaMing3a713229/ntlib.git)
 1. 
 ![image](https://hackmd.io/_uploads/r1--qQKA6.png)
@@ -20,6 +21,7 @@
 
 6. 等待安裝完成，並開啟example進行測試
 ![image](https://hackmd.io/_uploads/ryi_2mtR6.png)
+:::
 ---
 ### 測試程式碼:
 ```c
@@ -61,11 +63,13 @@ void loop() {
 ```c
 rsa_init(&rsa, 29, 31, 113);
 ```
+:::info
 #### @params
 ##### struct *rsa  ,引入結構體rsa之位址，為指標變數
 ##### uint64_t p   ,RSA 參數 p
 ##### uint64_t q   ,RSA 參數 q
 ##### uint64_t e   ,RSA 公鑰 e
+:::
 
 ## **Encrypt**
 #### 此函式對數值進行加密，message為欲加密訊息之數值
@@ -80,6 +84,5 @@ rsa.Decrypt(&rsa, cipher)
 ```
 
 ---
-
 
 
