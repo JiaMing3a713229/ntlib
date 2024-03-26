@@ -1,10 +1,10 @@
 #include "ntlib.h"
 #include <stdio.h>
 
-
 static uint64_t gcdof(uint64_t a, uint64_t b)
-{
-    if(a > b){
+{   
+    /* swap the value of a and b */
+    if(a > b){   
         a ^= b;
         b ^= a;
         a ^= b;
@@ -17,8 +17,8 @@ static uint64_t powof(uint64_t b, uint64_t pow, uint64_t mod_size)
 
     uint64_t ret = 1;
     while(pow != 0){
-        if((pow & 0x01) == 1){
-            ret *= b;
+        if((pow & 1) == 1){
+            ret = (ret * b) % mod_size;  
         }
         pow >>= 1;
         b = (b * b) % mod_size;
@@ -59,7 +59,7 @@ static inline uint64_t Decrypt_RSA(struct RSA *rsa, uint64_t cipher)
 }
 
 int rsa_init(struct RSA *rsa, uint64_t p, uint64_t q, uint64_t e)
-{
+{   
     rsa->Encrypt = Encrypt_RSA;
     rsa->Decrypt = Decrypt_RSA;
 
@@ -67,25 +67,23 @@ int rsa_init(struct RSA *rsa, uint64_t p, uint64_t q, uint64_t e)
     rsa->params.q = q;
     rsa->params.n = (rsa->params.p) * (rsa->params.q);
 
-    rsa->params.e = e;
+    
     rsa->params.lambda_n = lcmof((rsa->params.p -1) , (rsa->params.q -1));
-    rsa->params.d = invof((rsa->params.e), (rsa->params.lambda_n));
-
+    rsa->params.e = e;
+    rsa->params.d = invof((rsa->params.e), (rsa->params.lambda_n));    
     printf("------------key--gen--------------\r\n");
-    printf("RSA: %5s: %d \r\n", "p", rsa->params.p);
-    printf("RSA: %5s: %d \r\n", "q", rsa->params.q);
-    printf("RSA: %5s: %d \r\n", "n", rsa->params.n);
-    printf("RSA: %5s: %d \r\n", "e", rsa->params.e);
-    printf("RSA: %5s: %d \r\n", "lambel", rsa->params.lambda_n);
-    printf("RSA: %5s: %d \r\n", "d", rsa->params.d);
+    printf("RSA: %5s: %8llu \r\n", "p", rsa->params.p);
+    printf("RSA: %5s: %8llu \r\n", "q", rsa->params.q);
+    printf("RSA: %5s: %8llu \r\n", "n", rsa->params.n);
+    printf("RSA: %5s: %8llu \r\n", "e", rsa->params.e);
+    printf("RSA: %5s: %8llu \r\n", "lambel", rsa->params.lambda_n);
+    printf("RSA: %5s: %8llu \r\n", "d", rsa->params.d);
     printf("------------key--gen-seccess------\r\n");
+
+    
 }
 
-
-
-void test(void)
+int test(void)
 {
-    printf("%llu \r\n", gcdof(65254, 2104));
-    printf("pow: %llu \r\n", powof(7, 50, 71));
-    
+    printf("%llu \r\n", powof(5588, 4879, 282943));
 }
