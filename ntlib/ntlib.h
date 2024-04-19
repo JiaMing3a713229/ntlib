@@ -12,6 +12,21 @@ struct RSA{
     uint64_t (*Decrypt)(struct RSA *rsa, uint64_t cipher);
 };
 
+struct Paillier{
+    struct Params{
+        uint64_t y, p, g, Y, K;
+    }params;
+
+    uint64_t (*Encrypt)(struct Paillier *base, uint32_t message);
+    uint64_t (*Decrypt)(struct Paillier *base, uint64_t cipher);
+    uint64_t (*gen_Y)(struct Paillier *base, uint64_t y);
+};
+
 int rsa_init(struct RSA *rsa, uint64_t p, uint64_t q, uint64_t e);
+uint64_t  paillier_init(struct Paillier *base, uint64_t p, uint64_t g);
 int test(void);
+
+
+
+
 #endif
