@@ -12,18 +12,18 @@ struct RSA{
     uint64_t (*Decrypt)(struct RSA *rsa, uint64_t cipher);
 };
 
-struct Paillier{
+struct Elgamel{
     struct Params{
-        uint64_t y, p, g, Y, K;
+        uint64_t p, g;
     }params;
 
-    uint64_t (*Encrypt)(struct Paillier *base, uint32_t message);
-    uint64_t (*Decrypt)(struct Paillier *base, uint64_t cipher);
-    uint64_t (*gen_Y)(struct Paillier *base, uint64_t y);
+    uint64_t (*Encrypt)(struct Elgamel *base, uint32_t message);
+    uint64_t (*Decrypt)(struct Elgamel *base, uint64_t cipher);
+    uint64_t (*gen_Y)(struct Elgamel *base, uint64_t y);
 };
 
 int rsa_init(struct RSA *rsa, uint64_t p, uint64_t q, uint64_t e);
-uint64_t  paillier_init(struct Paillier *base, uint64_t p, uint64_t g);
+uint64_t  Elgamel_init(struct Elgamel *base, uint64_t p, uint64_t g);
 int test(void);
 
 

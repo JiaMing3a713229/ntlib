@@ -83,28 +83,28 @@ int rsa_init(struct RSA *rsa, uint64_t p, uint64_t q, uint64_t e)
     
 }
 
-static inline uint64_t* Encrypt_Paillier(struct Paillier *base, uint32_t message, uint64_t Y, uint64_t x)
+static inline uint64_t* Encrypt_Elgamel(struct Elgamel *base, uint32_t message, uint64_t Y, uint64_t x)
 {
-    uint64_t *ret = (uint64_t*)malloc(sizeof(uint64_t) * 2);
+    uint64_t *ret = (uint64_t*)malloc(sizeof(uint64_t) * 2);  //需要free(ret)
     uint64_t K = powof(Y, x, base->params.p);
     uint64_t c = (K * message) % (base->params.p);
     ret[0] = K;
     ret[1] = c;
-    return ret;
+    return ret;  //return (K,c),{k, c}
 }
 
 // RSA Decryption:D(c)=m = c^d mod n
-static inline uint64_t Decrypt_Paillier(struct Paillier *base, uint64_t cipher, uint64_t K)
+static inline uint64_t Decrypt_Elgamel(struct Elgamel *base, uint64_t cipher, uint64_t K)
 {
     return (cipher * invof(K, base->params.p)) % base->params.p;
 }
 
-static inline uint64_t gen_Y(struct Paillier *base, uint64_t y)
+static inline uint64_t gen_Y(struct Elgamel *base, uint64_t y)
 {
-    return powof(base->params.g, base->params.y, base->params.p);
+    return powof(base->params.g, y, base->params.p);
 }
 
-uint64_t paillier_init(struct Paillier *base, uint64_t p, uint64_t g)
+uint64_t Elgamel_init(struct Elgamel *base, uint64_t p, uint64_t g)
 {
     
     base->params.p = p;
@@ -114,8 +114,8 @@ uint64_t paillier_init(struct Paillier *base, uint64_t p, uint64_t g)
     printf("Paillier: %5s: %8llu \r\n", "p", base->params.p);
     printf("Paillier: %5s: %8llu \r\n", "g", base->params.g);
     printf("----------key--gen-seccess--------\r\n");
-    base->Encrypt = Encrypt_Paillier;
-    base->Decrypt = Decrypt_Paillier;
+    base->Encrypt = Encrypt_Elgamel;
+    base->Decrypt = Decrypt_Elgamel;
     base->gen_Y = gen_Y;
     
 }
