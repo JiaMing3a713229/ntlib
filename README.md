@@ -57,17 +57,21 @@ void loop() {
 ```
 ---
 ## **測試程式碼(Windows-GCC)**:
-#### Open powershell or Terminal and enter the command 
+
+#### Open Powershell or Terminal in Windows, switch to ntlib\ntlib\gcc_c and exploit main.c to test the function of ntlib API
+![image](https://hackmd.io/_uploads/rkKnPLK-C.png)
+
+#### 1. Open powershell or Terminal and enter the command 
 
 ![image](https://hackmd.io/_uploads/HJj8mUKbC.png)
 
-#### Compiler and generate an executable file - main.exe
+#### 2. Compiler and generate an executable file - main.exe
 ![image](https://hackmd.io/_uploads/BysgrIYZ0.png)
 
-#### Execute executable (.exe) file
+#### 3. Execute executable (.exe) file
 ![image](https://hackmd.io/_uploads/rJ9fBLK-C.png)
 
-#### Remove the .exe file and the main.o file
+#### 4. Remove the .exe file and the main.o file
 ![image](https://hackmd.io/_uploads/SyT2H8KZR.png)
 
 
