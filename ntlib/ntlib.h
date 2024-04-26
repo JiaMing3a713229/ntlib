@@ -17,8 +17,8 @@ struct Elgamal{
         uint64_t p, g;
     }params;
 
-    uint64_t (*Encrypt)(struct Elgamal *base, uint32_t message);
-    uint64_t (*Decrypt)(struct Elgamal *base, uint64_t cipher);
+    uint64_t (*Encrypt)(struct Elgamal *base, uint32_t message, uint64_t Y, uint64_t x);
+    uint64_t (*Decrypt)(struct Elgamal *base, uint64_t cipher, uint64_t K);
     uint64_t (*gen_Y)(struct Elgamal *base, uint64_t y);
 };
 
