@@ -1,7 +1,8 @@
 #include "ntlib.h"
 #include <stdio.h>
+#include <stdlib.h>
 
-static uint64_t gcdof(uint64_t a, uint64_t b)
+uint64_t gcdof(uint64_t a, uint64_t b)
 {   
     /* swap the value of a and b */
     if(a > b){   
@@ -12,7 +13,7 @@ static uint64_t gcdof(uint64_t a, uint64_t b)
     return (a == 0)? b : gcdof(b % a, a);
 }
 
-static uint64_t powof(uint64_t b, uint64_t pow, uint64_t mod_size)
+uint64_t powof(uint64_t b, uint64_t pow, uint64_t mod_size)
 {   
 
     uint64_t ret = 1;
@@ -26,7 +27,7 @@ static uint64_t powof(uint64_t b, uint64_t pow, uint64_t mod_size)
     return ret % mod_size;
 }
 
-static inline uint64_t lcmof(uint64_t a, uint64_t b)
+uint64_t lcmof(uint64_t a, uint64_t b)
 {
     return (a * b) / gcdof(a, b);
 }
@@ -47,18 +48,18 @@ static inline uint64_t invof(uint32_t num, uint32_t mod_size)
     
 }
 
-static inline uint64_t Encrypt_RSA(struct RSA *rsa, uint32_t message)
+static inline uint64_t Encrypt_RSA(struct _RSA *rsa, uint32_t message)
 {
     return powof(message, rsa->params.e, rsa->params.n);                              // m^e (mod n)
 }
 
 // RSA Decryption:D(c)=m = c^d mod n
-static inline uint64_t Decrypt_RSA(struct RSA *rsa, uint64_t cipher)
+static inline uint64_t Decrypt_RSA(struct _RSA *rsa, uint64_t cipher)
 {
     return powof(cipher, rsa->params.d, rsa->params.n);
 }
 
-int rsa_init(struct RSA *rsa, uint64_t p, uint64_t q, uint64_t e)
+int rsa_init(struct _RSA *rsa, uint64_t p, uint64_t q, uint64_t e)
 {   
     rsa->Encrypt = Encrypt_RSA;
     rsa->Decrypt = Decrypt_RSA;
@@ -79,11 +80,12 @@ int rsa_init(struct RSA *rsa, uint64_t p, uint64_t q, uint64_t e)
     printf("RSA: %5s: %8llu \r\n", "lambel", rsa->params.lambda_n);
     printf("RSA: %5s: %8llu \r\n", "d", rsa->params.d);
     printf("------------key--gen-seccess------\r\n");
+    return 1;
 
     
 }
 
-static inline uint64_t* Encrypt_Elgamal(struct Elgamal *base, uint32_t message, uint64_t Y, uint64_t x)
+static uint64_t* Encrypt_Elgamal(struct Elgamal *base, uint32_t message, uint64_t Y, uint64_t x)
 {
     uint64_t *ret = (uint64_t*)malloc(sizeof(uint64_t) * 2);  //需要free(ret)
     uint64_t K = powof(Y, x, base->params.p);
@@ -93,7 +95,7 @@ static inline uint64_t* Encrypt_Elgamal(struct Elgamal *base, uint32_t message, 
     return ret;  //return (K,c),{k, c}
 }
 
-// RSA Decryption:D(c)=m = c^d mod n
+// // RSA Decryption:D(c)=m = c^d mod n
 static inline uint64_t Decrypt_Elgamal(struct Elgamal *base, uint64_t cipher, uint64_t K)
 {
     return (cipher * invof(K, base->params.p)) % base->params.p;
@@ -104,7 +106,7 @@ static inline uint64_t gen_Y(struct Elgamal *base, uint64_t y)
     return powof(base->params.g, y, base->params.p);
 }
 
-uint64_t Elgamal_init(struct Elgamal *base, uint64_t p, uint64_t g)
+int Elgamal_init(struct Elgamal *base, uint64_t p, uint64_t g)
 {
     
     base->params.p = p;
@@ -117,12 +119,12 @@ uint64_t Elgamal_init(struct Elgamal *base, uint64_t p, uint64_t g)
     base->Encrypt = Encrypt_Elgamal;
     base->Decrypt = Decrypt_Elgamal;
     base->gen_Y = gen_Y;
-    
+    return 1;
 }
 
 
 
-int test(void)
-{
-    printf("%llu \r\n", powof(5588, 4879, 282943));
-}
+// int test(void)
+// {
+//     printf("%llu \r\n", powof(5588, 4879, 282943));
+// }

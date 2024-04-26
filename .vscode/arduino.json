@@ -1,0 +1,5 @@
+{
+    "configuration": "EraseFlash=Disable,AutoUploadMode=Disable,StdLibInit=Enable,UploadBaudrate=2M",
+    "board": "realtek:AmebaPro2:Ameba_AMB82-MINI",
+    "sketch": "ntlib\\ntlib_dev.ino"
+}
