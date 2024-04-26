@@ -80,7 +80,6 @@ int rsa_init(struct RSA *rsa, uint64_t p, uint64_t q, uint64_t e)
     printf("RSA: %5s: %8llu \r\n", "d", rsa->params.d);
     printf("------------key--gen-seccess------\r\n");
 
-    
 }
 
 static inline uint64_t* Encrypt_Elgamal(struct Elgamal *base, uint32_t message, uint64_t Y, uint64_t x)
@@ -93,7 +92,7 @@ static inline uint64_t* Encrypt_Elgamal(struct Elgamal *base, uint32_t message, 
     return ret;  //return (K,c),{k, c}
 }
 
-// RSA Decryption:D(c)=m = c^d mod n
+// Elgamal Decryption:D(c)= m = K * c^(-1) mod p
 static inline uint64_t Decrypt_Elgamal(struct Elgamal *base, uint64_t cipher, uint64_t K)
 {
     return (cipher * invof(K, base->params.p)) % base->params.p;
@@ -119,8 +118,6 @@ uint64_t Elgamal_init(struct Elgamal *base, uint64_t p, uint64_t g)
     base->gen_Y = gen_Y;
     
 }
-
-
 
 int test(void)
 {
