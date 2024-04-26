@@ -56,6 +56,22 @@ void loop() {
 
 ```
 ---
+## **測試程式碼(Windows-GCC)**:
+#### Open powershell or Terminal and enter the command 
+
+![image](https://hackmd.io/_uploads/HJj8mUKbC.png)
+
+#### Compiler and generate an executable file - main.exe
+![image](https://hackmd.io/_uploads/BysgrIYZ0.png)
+
+#### Execute executable (.exe) file
+![image](https://hackmd.io/_uploads/rJ9fBLK-C.png)
+
+#### Remove the .exe file and the main.o file
+![image](https://hackmd.io/_uploads/SyT2H8KZR.png)
+
+
+---
 # **RSA-Crypto API**
 ---
 ## **Init**
